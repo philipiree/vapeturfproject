@@ -1,18 +1,14 @@
 @extends('layouts.master')
-
-
 @section('title')
     Dashboard
 @endsection
 
-
 @section('content')
-
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title text-center">Registered Roles</h4>
+                <h4 class="card-title text-center">Registered Users | Role Assignment</h4>
                     <div class="text-center col-md-6 mx-auto">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -51,7 +47,7 @@
                            <form action="/role-delete/{{ $user->id }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger">delete</button>
+                            <button type="submit" class="btn btn-danger">DELETE</button>
                            </form>
                        </td>
                       </tr>
