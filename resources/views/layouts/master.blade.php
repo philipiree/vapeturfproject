@@ -18,13 +18,9 @@
   <link href="../assets/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
-<<<<<<< HEAD
-  <script src="https://kit.fontawesome.com/81abfe277e.js" crossorigin="anonymous"></script>
-=======
   @yield('styles')
   {{-- <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script> --}}
   <script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
->>>>>>> mybranch
 </head>
 
 <body class="">
