@@ -20,6 +20,11 @@ class DashboardController extends Controller
     }
 
     public function update(Request $request, $id){
+
+        $this->validate($request, [
+            'name' => 'required',
+            'usertype' => 'required'
+        ]);
         $users = User::find($id);
         $users->name = $request->input('username');
         $users->usertype = $request->input('usertype');
