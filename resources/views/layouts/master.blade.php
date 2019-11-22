@@ -18,6 +18,9 @@
   <link href="../assets/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+  @yield('styles')
+  {{-- <script src="http://cdn.ckeditor.com/4.6.1/standard/ckeditor.js"></script> --}}
+  <script src="https://cdn.ckeditor.com/ckeditor5/15.0.0/classic/ckeditor.js"></script>
 </head>
 
 <body class="">
@@ -36,10 +39,23 @@
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li>
-            <a href="#">
+          <li class="{{ 'dashboard' == request()->path() ? 'active' : '' }} ">
+            <a href="/dashboard">
               <i class="now-ui-icons design_app"></i>
               <p>Dashboard</p>
+            </a>
+          </li>
+          <li>
+          <li class="{{ 'role-register' == request()->path() ? 'active' : '' }} ">
+            <a href="/role-register">
+              <i class="now-ui-icons users_single-02"></i>
+              <p>Roles</p>
+            </a>
+          </li>
+          <li class="{{ 'listedproducts' == request()->path() ? 'active' : '' }} ">
+            <a href="/listedproducts">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Listed Products</p>
             </a>
           </li>
           <li>
@@ -60,20 +76,15 @@
               <p>Notifications</p>
             </a>
           </li>
-          <li>
-            <a href="/role-register">
-              <i class="now-ui-icons users_single-02"></i>
-              <p>User Profile</p>
-            </a>
-          </li>
-          <li class="active ">
-            <a href="/dashboard">
+
+          <li class="{{ '' == request()->path() ? 'active' : '' }} ">
+            <a href="#">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Table List</p>
             </a>
           </li>
           <li>
-            <a href="./typography.html">
+            <a href="#">
               <i class="now-ui-icons text_caps-small"></i>
               <p>Typography</p>
             </a>
@@ -93,7 +104,6 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="#pablo">Table List</a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -170,6 +180,7 @@
       <div class="panel-header panel-header-sm">
       </div>
       <div class="content">
+          @include('inc.messages')
           @yield('content')
       </div>
 
@@ -206,9 +217,23 @@
   <!--  Notifications Plugin    -->
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script>
+  {{-- <script src="../assets/js/now-ui-dashboard.min.js?v=1.3.0" type="text/javascript"></script> --}}
   <!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
+  {{-- <script src="../assets/demo/demo.js"></script> --}}
+
+  {{-- <script>
+        CKEDITOR.replace( 'editor' );
+    </script> --}}
+    <script>
+        ClassicEditor
+    .create( document.querySelector( '#editor' ) )
+    .then( editor => {
+        console.log( editor );
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+    </script>
 </body>
 
 </html>

@@ -28,7 +28,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table">
+                  <table class="table table-borderless">
                     <thead class="text-primary text-center">
                         <tr class="d-flex">
                             <th class="col-2">ID</th>
