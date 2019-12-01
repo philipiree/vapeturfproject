@@ -78,19 +78,31 @@ class ProductsController extends Controller
             $fileNameToStore = 'noimage.jpg';
         }
 
+
+
         $product = new Product;
         $product->name = $request->input('name');
         $product->maker = $request->input('maker');
         $product->flavor = $request->input('flavor');
-        $product->category_id = $request->input('category_id');
         $product->description = $request->input('description');
+         //$product->category_id = $request->input('category_id');
         $product->price = $request->input('price');
         $product->size = $request->input('size');
         $product->strength = $request->input('strength');
         $product->quantity = $request->input('quantity');
         $product->display_image = $fileNameToStore;
 
+        $tag_ids = $request->input('category_id');
+
+
+
+        //$post->tag()->sync([$tag_id]);
+
         $product->save();
+
+        $product->categories()->sync([$tag_ids]);
+
+
 
         return redirect('/listedproducts')->with('success', 'Product Created');
 
@@ -167,7 +179,6 @@ class ProductsController extends Controller
         $product->name = $request->input('name');
         $product->maker = $request->input('name');
         $product->flavor = $request->input('flavor');
-        $product->category_id = $request->input('category_id');
         $product->description = $request->input('description');
         $product->price = $request->input('price');
         $product->size = $request->input('size');
@@ -177,10 +188,18 @@ class ProductsController extends Controller
         if($request->hasFile('display_image')){
             $product->display_image = $fileNameToStore;
         }
+
+        $tag_ids = $request->input('category_id');
+
+        //$post->tag()->sync([$tag_id]);
+
+        $product->categories()->sync([$tag_ids]);
         $product->save();
 
-        return redirect('/listedproducts')->with('update', 'Product Updated');
 
+
+
+        return redirect('/listedproducts')->with('update', 'Product Updated');
 
     }
 
@@ -197,26 +216,41 @@ class ProductsController extends Controller
         return redirect('/listedproducts')->with('error','Successfully Deleted');
     }
 
-    //front page view
+
     public function viewer()
     {
         //$product = DB::select('select * from products );
         //$products = Product::all();
         //$products = Product::orderBy('created_at','desc')->get();
-        $products = Product::orderBy('created_at','desc')->paginate(9);
-        return view('pages.collections')->with('products', $products);
+        //$products = Product::orderBy('created_at','desc')->paginate(9);
+
+        if(request()->category){
+            $products = Product::with('categories')->whereHas('categories', function($query){
+                $query->where('name', request()->category);
+            });
+            $categories = Category::all();
+            $categoryName = optional($categories->where('name', request()->category)->first())->name;
+        }else{
+            //$products = Product::where('featured', true);
+            $products = Product::take(12);
+            $categories = Category::all();
+            $categoryName = 'Featured';
+        }
+
+        if(request()->sort == 'low_high'){
+            $products = $products->orderBy('price')->paginate(9);
+        }elseif(request()->sort == 'high_low'){
+            $products = $products->orderBy('price','desc')->paginate(9);
+        }else{
+            $products = $products->paginate(9);
+        }
+
+        return view('pages.collections')->with([
+            'products' => $products,
+            'categories' => $categories,
+            'categoryName' => $categoryName,
+            ]);
     }
-
-    // public function sortBy($sort)
-    // {
-    //     //$product = DB::select('select * from products );
-    //     //$products = Product::all();
-    //     //$products = Product::orderBy('created_at','desc')->get();
-
-    //     $product = Product::orderBy('name', 'desc');
-    //     $products = Product::orderBy('created_at','desc')->paginate(10);
-    //     return view('admin.productsview')->with('products', $products);
-    // }
 
 
 }

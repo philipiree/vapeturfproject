@@ -16,15 +16,9 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($category)
+    public function index(Category $categories)
     {
 
-        $category = Category::find($category);
-
-        return $category->category = $category->id;
-
-
-        //return view('pages.collections', compact('category'));
     }
 
     /**

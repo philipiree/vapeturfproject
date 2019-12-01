@@ -29,7 +29,6 @@
                 <h2 class="product-title">{{ $product->name }}</h2>
                 <div class="rating">
                     <h3><span class="review-no">{{ $product->flavor }}</span></h3>
-                    <h3><span class="review-no">{{ $product->category->name}}</span></h3>
                 </div>
                 <p class="product-description">{!! $product->description !!}</p>
                 <h4 class="price"><span>P{{ $product->price }}</span></h4>

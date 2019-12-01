@@ -16,10 +16,11 @@
 
       <div class="col-lg-3">
 
-        <h1 class="my-4">Vape Turf</h1>
+        <h1 class="my-4">{{ $categoryName }}</h1>
         <div class="list-group">
-          <a href="#" class="list-group-item">Pastry</a>
-          <a href="#" class="list-group-item">Fruity</a>
+            @foreach ($categories as $category)
+          <a href="{{ route('pages.collections', ['category' => $category->name]) }}" class="list-group-item">{{ $category->name }}</a>
+            @endforeach
         </div>
 
       </div>
@@ -54,10 +55,19 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
+        <div class="products-header">
+                    <div>
+                        <strong>Price</strong>
+                        <a href="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'low_high']) }}">Low to High</a>
+                        <a href="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'high_low']) }}">High to Low</a>
+                    </div>
+            </div>
 
         <div class="row">
-        @foreach ($products as $product)
-          <div class="col-lg-4 col-md-6 mb-4">
+
+
+        @forelse ($products as $product)
+            <div class="col-lg-4 col-md-6 mb-4">
             <div class="card h-100">
               <a href="#"><img class="card-img-top" src="/storage/display_images/{{ $product->display_image }}" alt=""></a>
               <div class="card-body">
@@ -71,14 +81,19 @@
               </div>
             </div>
           </div>
-        @endforeach
+        @empty
+
+        <div style="text-align:left">No Items Found</div>
+
+        @endforelse
 
         <!-- /.row -->
 
       </div>
       <!-- /.col-lg-9 -->
       <div class="center-align">
-         {{ $products->links() }}
+         {{-- {{ $products->links() }} --}}
+         {{ $products->appends(request()->input())->links() }}
     </div>
     </div>
 

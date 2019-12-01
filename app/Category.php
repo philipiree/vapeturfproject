@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $table = 'categories';
+   // public $table = 'categories';
 
     public function products(){
 
-        return $this->hasMany('App\Product');
+        return $this->belongsToMany('App\Product');
     }
 
     public function getRouteKeyName(){

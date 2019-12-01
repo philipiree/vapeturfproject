@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //Table name
-    protected $table = 'products';
+    public $table = 'products';
     //Primary Key
-    public $primaryKey = 'id';
+    //public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
 
-    public function category(){
+    public function categories(){
 
-        return $this->belongsTo('App\Category');
+        return $this->belongsToMany('App\Category');
 
     }
+
+
 
 }

@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
     //Route::get('/listedproducts/{id}', 'ProductsController@show');
 
     //route for products display
-    Route::get('/collections', 'ProductsController@viewer');
-    Route::get('/collections/categories/{category}', 'CategoriesController@index');
+    Route::get('/collections', 'ProductsController@viewer')->name('pages.collections');
+    //Route::get('/collections/categories/{categories}', 'CategoriesController@index');
     Auth::routes();
     Route::get('/home', 'HomeController@index')->name('home');
