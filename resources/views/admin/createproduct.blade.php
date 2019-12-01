@@ -18,7 +18,7 @@
                  <div class="card-body">
                      <div class="row justify-content-center">
                         <div class="col-md-7">
-                            {!! Form::open(['action' =>'ProductsController@store', 'method' => 'POST']) !!}
+                            {!! Form::open(['action' =>'ProductsController@store', 'method' => 'POST', 'enctype' =>'multipart/form-data']) !!}
                                 <div class="form-group">
                                     {{ Form::label('name', 'Product Name') }}
                                     {{ Form::text('name', '', ['class'=> 'form-control']) }}
@@ -36,6 +36,18 @@
                                     {{ Form::textarea('description', '', ['id' => 'editor', 'class'=> 'form-control']) }}
                                 </div>
                                 <div class="form-group">
+                                    {{ Form::label('category', 'Category') }}
+                                    <br>
+                                    <select class="form-control" name="category_id">
+                                        @foreach ($category as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name}}</option>
+                                        @endforeach
+                                        {{-- {{ Form::select('category', $select, null, ['class'=>'form-control']) }} --}}
+
+                                        {{-- {{ Form::select('category', $categories, null, ['placeholder' => 'Pick a size...']) }} --}}
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     {{ Form::label('price', 'Price') }}
                                     {{ Form::text('price', '', ['class'=> 'form-control']) }}
                                 </div>
@@ -51,8 +63,9 @@
                                     {{ Form::label('quantity', 'Quantity') }}
                                     {{ Form::text('quantity', '', ['class'=> 'form-control']) }}
                                 </div>
+                                    {{ Form::file('display_image') }}
                                 <div class="text-center">
-                                {{Form::submit('Submit', ['class'=> 'btn btn-primary'])}}
+                                {{ Form::submit('Submit', ['class'=> 'btn btn-primary'])}}
                                 </div>
                             {!! Form::close() !!}
                         </div>

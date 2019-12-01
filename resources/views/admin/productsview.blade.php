@@ -36,7 +36,7 @@
                         <td class="col-2">{{ $product->id }}</td>
                         <td class="col-2"><a href="/listedproducts/{{ $product->id}}"> {{ $product->name }}</a></td>
                         <td class="col-2">{{ $product->created_at }}</td>
-                        <td class="col-1"><a href="/edit-product/{{ $product->id }}" class="btn btn-success">EDIT</a></td>
+                        <td class="col-1"><a href="/edit-product/{{ $product->id}}" class="btn btn-success">EDIT</a></td>
                         <td class="col-1">
                             <form action="/delete-product/{{ $product->id }}" method="POST">
                                 {{ csrf_field() }}

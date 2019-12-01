@@ -18,8 +18,11 @@
                  <div class="card-body">
                      <div class="row justify-content-center">
                         <div class="col-md-7">
-                            {!! Form::open(['action' =>['ProductsController@update', $product->id], 'method' => 'POST']) !!}
+                            {!! Form::open(['action' =>['ProductsController@update', $product->id], 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+                                {{ csrf_field() }}
+
                                 <div class="form-group">
+                                    {{ Form::hidden('_method','PUT') }}
                                     {{ Form::label('name', 'Name') }}
                                     {{ Form::text('name', $product->name, ['class'=> 'form-control']) }}
                                 </div>
@@ -34,6 +37,10 @@
                                 <div class="form-group">
                                     {{ Form::label('description', 'Description') }}
                                     {{ Form::textarea('description', $product->description, ['id' => 'editor', 'class'=> 'form-control']) }}
+                                </div>
+                                <div class="form-group">
+                                    {{ Form::label('category', 'Category') }}
+                                    {{ Form::select('category_id', $categories, null, ['class' =>'form-control']) }}
                                 </div>
                                 <div class="form-group">
                                     {{ Form::label('price', 'Price') }}
@@ -51,8 +58,8 @@
                                     {{ Form::label('quantity', 'Quantity') }}
                                     {{ Form::text('quantity', $product->quantity, ['class'=> 'form-control']) }}
                                 </div>
+                                {{ Form::file('display_image') }}
                                 <div class="text-center">
-                                {{ Form::hidden('_method','PUT') }}
                                 {{Form::submit('Submit', ['class'=> 'btn btn-primary'])}}
                                 </div>
                             {!! Form::close() !!}

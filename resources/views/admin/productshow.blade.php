@@ -10,8 +10,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 @endsection
 
-
-
 @section('content')
 
     <div class="row">
@@ -22,15 +20,16 @@
             <div class="preview col-md-6">
 
                 <div class="preview-pic tab-content">
-                    <div class="tab-pane active" id="pic-1"><img src="../images/product1.jpeg"/>
+                    <div class="tab-pane active" id="pic-1"><img src="/storage/display_images/{{ $product->display_image }}"/>
                     </div>
-                    <div class="text-center"><h6 style="color: green;">Available Stocks: {{ $product-> quantity }}</h6></div>
+                    <div class="text-center"><h6 style="color: green;">Available Stocks: {{ $product->quantity }}</h6></div>
                 </div>
             </div>
             <div class="details col-md-6">
                 <h2 class="product-title">{{ $product->name }}</h2>
                 <div class="rating">
                     <h3><span class="review-no">{{ $product->flavor }}</span></h3>
+                    <h3><span class="review-no">{{ $product->category->name}}</span></h3>
                 </div>
                 <p class="product-description">{!! $product->description !!}</p>
                 <h4 class="price"><span>P{{ $product->price }}</span></h4>
