@@ -217,19 +217,18 @@ class ProductsController extends Controller
     }
 
 
+
     public function viewer()
     {
-        //$product = DB::select('select * from products );
-        //$products = Product::all();
-        //$products = Product::orderBy('created_at','desc')->get();
-        //$products = Product::orderBy('created_at','desc')->paginate(9);
 
         if(request()->category){
+
             $products = Product::with('categories')->whereHas('categories', function($query){
-                $query->where('name', request()->category);
+            $query->where('name', request()->category);
             });
             $categories = Category::all();
             $categoryName = optional($categories->where('name', request()->category)->first())->name;
+
         }else{
             //$products = Product::where('featured', true);
             $products = Product::take(12);
@@ -237,20 +236,63 @@ class ProductsController extends Controller
             $categoryName = 'Featured';
         }
 
+
         if(request()->sort == 'low_high'){
-            $products = $products->orderBy('price')->paginate(9);
+            $products = $products->orderBy('price')->paginate(8);
         }elseif(request()->sort == 'high_low'){
-            $products = $products->orderBy('price','desc')->paginate(9);
+            $products = $products->orderBy('price','desc')->paginate(8);
+        }elseif(request()->sort == 'a_z'){
+            $products = $products->orderBy('name')->paginate(8);
+        }elseif(request()->sort == 'z_a'){
+            $products = $products->orderBy('name','desc')->paginate(8);
+        }elseif(request()->sort == 'n_o'){
+            $products = $products->orderBy('created_at')->paginate(8);
+        }elseif(request()->sort == 'o_n'){
+            $products = $products->orderBy('created_at','desc')->paginate(8);
         }else{
-            $products = $products->paginate(9);
+            $products = $products->paginate(8);
         }
 
+
         return view('pages.collections')->with([
+
             'products' => $products,
             'categories' => $categories,
             'categoryName' => $categoryName,
+
             ]);
     }
+
+    public function display($id)
+    {
+
+        if(request()->category){
+
+            $products = Product::with('categories')->whereHas('categories', function($query){
+            $query->where('name', request()->category);
+            });
+            $categories = Category::all();
+            $categoryName = optional($categories->where('name', request()->category)->first())->name;
+
+        }else{
+            //$products = Product::where('featured', true);
+            $products = Product::take(12);
+            $categories = Category::all();
+            $categoryName = 'Featured';
+        }
+
+        $products = Product::find($id);
+
+        return view('pages.display')->with([
+            'product' => $products,
+            'categories' => $categories,
+
+
+        ]);
+    }
+
+
+
 
 
 }

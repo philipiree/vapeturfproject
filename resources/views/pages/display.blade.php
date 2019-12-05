@@ -1,21 +1,20 @@
-@extends('layouts.app')
-
+@extends('layouts.nav')
 
 @section('title')
     Products Preview
 @endsection
 
 @section('styles')
-<link href="../assets/css/now-ui-dashboard.css?v=1.3.0" rel="stylesheet" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+ <link href="{{ asset('css/itemdisplay.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
 
     <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
+
+          <div style="margin-top: 60px;"class="col-md-12">
+
         <div class="row">
             <div class="preview col-md-6">
 
@@ -25,17 +24,17 @@
                     <div class="text-center"><h6 style="color: green;">Available Stocks: {{ $product->quantity }}</h6></div>
                 </div>
             </div>
-            <div class="details col-md-6">
-                <h2 class="product-title">{{ $product->name }}</h2>
+            <div style="margin-top: 100px" class="details col-md-6">
+                <p class="product-title">{{ $product->name }}</p>
                 <div class="rating">
-                    <h3><span class="review-no">{{ $product->flavor }}</span></h3>
+                    <p class="flavor"><span class="review-no">{{ $product->flavor }}</span></p>
                 </div>
-                <p class="product-description">{!! $product->description !!}</p>
-                <h4 class="price"><span>P{{ $product->price }}</span></h4>
+                <p class="description">{!! $product->description !!}</p>
+                <p class="price"><span>P{{ $product->price }}</span></p>
                     <div class="row">
                         <div class="col-sm-4" id="form-size">
                         <form>
-                        <h6>Size</h6>
+                        <h6 class="colorsize">Size</h6>
                             <select name="cars" class="custom-select">
                             <option selected>60ML</option>
                             </select>
@@ -61,15 +60,16 @@
                             <option value="audi">4</option>
                             </select>
                         </div>
+                    <button class="btn-cart"  type="button">ADD TO CART</button>
                     </div>
-                    <div>
+
+
             </div>
         </div>
-    </div>
-    </div>
             </div>
         </div>
-    </div>
+
+    <div style="margin-bottom: 30px;"></div>
 @endsection
 
 @section('script')

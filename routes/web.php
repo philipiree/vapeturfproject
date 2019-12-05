@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
 
     //route for products display
     Route::get('/collections', 'ProductsController@viewer')->name('pages.collections');
+    Route::get('/collections/{id}', 'ProductsController@display')->name('pages.display');
     //Route::get('/collections/categories/{categories}', 'CategoriesController@index');
     Auth::routes();
     Route::get('/home', 'HomeController@index')->name('home');

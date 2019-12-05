@@ -14,37 +14,24 @@
 
 <div class="row">
 
-      <div class="col-lg-3">
-
-        <h1 class="my-4">{{ $categoryName }}</h1>
-        <div class="list-group">
-            @foreach ($categories as $category)
-          <a href="{{ route('pages.collections', ['category' => $category->name]) }}" class="list-group-item">{{ $category->name }}</a>
-            @endforeach
-        </div>
-
-      </div>
       <!-- /.col-lg-3 -->
 
-      <div class="col-lg-9">
+      <div class="col-lg-12">
 
-        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+         <div id="carouselExampleIndicators" style="" class="carousel slide my-4" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
           </ol>
 
           <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+              <img class="d-block img-fluid mx-auto" src="itemspic/itemc1.png" alt="First slide">
             </div>
             <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+              <img class="d-block img-fluid mx-auto" src="itemspic/itemc2.png" alt="Second slide">
             </div>
-            <div class="carousel-item">
-              <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
-            </div>
+
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -55,29 +42,45 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-        <div class="products-header">
-                    <div>
-                        <strong>Price</strong>
-                        <a href="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'low_high']) }}">Low to High</a>
-                        <a href="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'high_low']) }}">High to Low</a>
-                    </div>
-            </div>
 
+
+        <hr>
         <div class="row">
 
+        <h6 class="my-auto mx-3">Sort By:</h6>
 
+
+
+        <div class="form-group my-auto">
+            <select onchange="location = this.value;" class="form-control" id="cat-select">
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'low_high']) }}">Price, High to Low</option>
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'high_low']) }}">Price, Low to High</option>
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'a_z']) }}">Alphabeticallly, A-Z </option>
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'z_a']) }}">Alphabeticallly, Z-A </option>
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'o_n']) }}">Date, Old-New</option>
+                <option value="{{ route('pages.collections', ['category' => request()->category, 'sort' =>'n-o']) }}">Date, New-Old</option>
+            </select>
+        </div>
+
+
+            <p style="font-style: italic; margin-left:700px "class="my-auto">{{ $products->count() }} Products</p>
+
+    </div>
+    <hr>
+
+
+        <div class="row">
         @forelse ($products as $product)
-            <div class="col-lg-4 col-md-6 mb-4">
+            <div class="col-lg-3 col-md-6 mb-3">
             <div class="card h-100">
               <a href="#"><img class="card-img-top" src="/storage/display_images/{{ $product->display_image }}" alt=""></a>
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="/listedproducts/{{ $product->id}}">{{ $product->name }}</a>
+                  <a class="product_display"href="/collections/{{ $product->id}}">{{ $product->name }}</a>
+                  <p class="descp">{{ $product->flavor }}</p>
+                  <p class="makerdesc">{{ $product->maker }}</p>
+                  <h5 class="pricetag">P{{ $product->price }}</h5>
                 </h4>
-                <h5>{{ $product->price }}</h5>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
               </div>
             </div>
           </div>
@@ -97,10 +100,26 @@
     </div>
     </div>
 
+</div>
+
+
     <!-- /.row -->
 @endsection
 
+
+
 @section('script')
+    <script>
 
+    window.onload = function() {
+        var selItem = sessionStorage.getItem("SelItem");
+        $('#cat-select').val(selItem);
+        }
+        $('#cat-select').change(function() {
+            var selVal = $(this).val();
+            sessionStorage.setItem("SelItem", selVal);
+        });
+    </script>
 
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 @endsection
